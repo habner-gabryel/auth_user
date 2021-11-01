@@ -1,8 +1,8 @@
 package pack;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -41,19 +41,10 @@ public class ServletController extends HttpServlet {
 		HttpSession session = request.getSession();
 		session.setAttribute("cpf", cpf);
 		session.setAttribute("senha", senha);
+
+		RequestDispatcher dispatcher = request.getRequestDispatcher("ServletReader");
 		
-		response.setContentType("text/html");
-		PrintWriter out = response.getWriter();
-		 
-		out.println("<HTML>");
-		out.println("<HEAD><TITLE>Service</TITLE></HEAD>");
-		out.println("<BODY>");
-		out.println("<p> Este é o usuário com o CPF: " + cpf + "</p>");
-		out.println("<p> E senha: " + senha + "</p>");
-		out.println(" </BODY>");
-		out.println("</HTML>");
-		out.flush();
-		out.close();
+		dispatcher.forward(request, response);
 	}
 
 }
