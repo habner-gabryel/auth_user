@@ -12,35 +12,31 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
- * Servlet implementation class ServletController
+ * Servlet implementation class ServletReader
  */
-@WebServlet("/ServletController")
-public class ServletController extends HttpServlet {
+@WebServlet("/ServletReader")
+public class ServletReader extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ServletController() {
+    public ServletReader() {
         super();
         // TODO Auto-generated constructor stub
     }
 
-    @Override
-    public void init() throws ServletException {
-    	ServletContext context = getServletContext();
-    	context.setAttribute("classe", this.getClass());
-    }
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String cpf = request.getParameter("cpf");
-		String senha = request.getParameter("senha");
-		 
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		HttpSession session = request.getSession();
-		session.setAttribute("cpf", cpf);
-		session.setAttribute("senha", senha);
+		String cpf = session.getAttribute("cpf").toString();
+		String senha = session.getAttribute("senha").toString();
+
+    	ServletContext context = getServletContext();
+    	String classe = context.getAttribute("classe").toString();
 		
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
@@ -50,10 +46,13 @@ public class ServletController extends HttpServlet {
 		out.println("<BODY>");
 		out.println("<p> Este é o usuário com o CPF: " + cpf + "</p>");
 		out.println("<p> E senha: " + senha + "</p>");
+		out.println("<p> Classe: " + classe + "</p>");
 		out.println(" </BODY>");
 		out.println("</HTML>");
 		out.flush();
 		out.close();
+
+		
 	}
 
 }
