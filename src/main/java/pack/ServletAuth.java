@@ -13,6 +13,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  * Servlet implementation class ServletAuth
@@ -57,6 +58,8 @@ public class ServletAuth extends HttpServlet {
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
 		
+		HttpSession session = request.getSession();
+		
 		try {
 		String consulta = "SELECT * FROM users WHERE cpf = '" + cpf + "' AND senha = '" + senha + "';";
 		Statement statement;
@@ -64,9 +67,15 @@ public class ServletAuth extends HttpServlet {
 			ResultSet rs = statement.executeQuery(consulta);
 			
 			if(rs.next()) { //User Autenticado
-				out.println("<h2> Autenticação efetuada com sucesso!</h2>");
+				
+				session.setAttribute("message", "Usuário Autenticado");
+				
+				response.sendRedirect("jsp/success.jsp");
 			}else {
-				out.println("<h2> some daqui meo </h2>");
+				
+				session.setAttribute("message", "Usuário Não Autenticado");
+				
+				response.sendRedirect("jsp/login.jsp");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
