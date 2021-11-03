@@ -21,7 +21,7 @@ input:invalid:focus {
 </style>
 <body>
 	<div class="div_father">
-		<form name="form" action="http://localhost/JavaWeb/ServletAuth" method="post">
+		<form name="form" action="http://localhost/JavaWeb/jsp/auth.jsp" method="post">
 			<label>Digite seu CPF:</label><br>
 			<input type="text" minlength="14" maxlength="14" title="xxx.xxx.xxx-xx" required pattern="\d(3)\.\d(3)\.\d(3)\-\d(2)" name="cpf"><br>
 			
